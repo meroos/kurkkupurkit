@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,500&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g900:#0f3324; --g800:#164a33; --g700:#1f5e45; --g500:#2f8a5c; --g400:#3dbb6b; --g100:#e4f3e8;
+  --cream:#f6f0df; --paper:#fbf8f0; --ink:#1b2a21; --muted:#5d6b61; --red:#c8263a; --red2:#e44a55;
+  --purple:#6a5a7e; --gold:#c9a24a;
+  --r:22px; --shadow:0 18px 50px -18px rgba(15,51,36,.35);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Manrope,system-ui,sans-serif;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;line-height:1.55}
+img{max-width:100%;display:block}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;line-height:1.05;margin:0;letter-spacing:-.01em}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+.btn{display:inline-flex;align-items:center;gap:.6em;border:0;cursor:pointer;font:800 1rem Manrope,sans-serif;padding:1em 1.6em;border-radius:999px;background:var(--g400);color:var(--g900);text-decoration:none;transition:transform .15s, box-shadow .15s, background .15s;box-shadow:0 10px 24px -10px rgba(61,187,107,.8)}
+.btn:hover{transform:translateY(-2px);background:#4fd07c}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.btn.dark{background:var(--g800);color:var(--cream);box-shadow:none}
+
+/* NAV */
+.nav{position:fixed;inset:0 0 auto 0;z-index:30;transition:background .25s, box-shadow .25s}
+.nav.solid{background:rgba(15,51,36,.92);backdrop-filter:blur(10px);box-shadow:0 6px 20px -12px rgba(0,0,0,.5)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:74px}
+.nav img{height:56px;width:auto;background:var(--cream);border-radius:50%;padding:6px 8px;box-shadow:0 4px 14px -6px rgba(0,0,0,.5)}
+.nav-links{display:flex;gap:26px;align-items:center}
+.nav-links a{color:var(--cream);text-decoration:none;font-weight:700;font-size:.95rem;opacity:.9}
+.nav-links a:hover{opacity:1}
+.lang{display:flex;background:rgba(246,240,223,.14);border-radius:999px;padding:4px}
+.lang button{border:0;background:transparent;color:var(--cream);font:800 .8rem Manrope;padding:.45em .8em;border-radius:999px;cursor:pointer;letter-spacing:.06em}
+.lang button.on{background:var(--cream);color:var(--g900)}
+@media (max-width:760px){.nav-links a{display:none}}
+
+/* HERO */
+.hero{position:relative;min-height:min(94vh,820px);display:flex;align-items:flex-end;color:var(--cream);overflow:hidden;background:var(--g900)}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:62% 40%;transform:scale(1.04);animation:drift 18s ease-in-out infinite alternate}
+@keyframes drift{to{transform:scale(1.1) translate(-1.5%,-1%)}}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(15,51,36,.96) 0%,rgba(15,51,36,.78) 38%,rgba(15,51,36,.15) 72%),linear-gradient(0deg,rgba(15,51,36,.9),transparent 45%)}
+.hero .wrap{position:relative;z-index:2;padding-top:130px;padding-bottom:84px;width:100%}
+.eyebrow{display:inline-flex;gap:.6em;align-items:center;font-weight:800;text-transform:uppercase;letter-spacing:.16em;font-size:.78rem;color:var(--g400)}
+.eyebrow::before{content:"";width:28px;height:2px;background:currentColor}
+.hero h1{font-size:clamp(2.6rem,6.4vw,5.4rem);font-weight:900;max-width:11.5em;margin:.35em 0 .3em}
+.hero h1 em{font-style:italic;font-weight:500;color:var(--g400)}
+.hero p.lead{font-size:clamp(1.05rem,1.6vw,1.25rem);max-width:34em;opacity:.92;margin:0 0 2em}
+.hero-cta{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+.ghost{color:var(--cream);font-weight:700;text-decoration:none;border-bottom:2px solid rgba(246,240,223,.4);padding-bottom:2px}
+.stamp{position:absolute;z-index:3;right:6%;top:24%;width:178px;height:178px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;text-align:center;transform:rotate(-12deg);box-shadow:var(--shadow);animation:bob 4s ease-in-out infinite}
+.stamp::before{content:"";position:absolute;inset:8px;border:2px dashed rgba(255,255,255,.55);border-radius:50%}
+.stamp b{display:block;font:900 3.2rem/0.9 Fraunces,serif}
+.stamp span{font-weight:800;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase}
+.stamp small{display:block;font-weight:700;opacity:.9;font-size:.74rem;margin-top:2px;line-height:1.2}
+@keyframes bob{50%{transform:rotate(-8deg) translateY(-6px)}}
+@media (max-width:760px){.stamp{width:122px;height:122px;right:5%;top:92px}.stamp b{font-size:2.2rem}.stamp span{font-size:.7rem}.stamp small{font-size:.66rem}}
+
+/* MARQUEE */
+.marquee{background:var(--g400);color:var(--g900);overflow:hidden;white-space:nowrap;font:900 1.15rem Fraunces,serif;padding:14px 0}
+.marquee div{display:inline-block;animation:scroll 32s linear infinite}
+.marquee span{margin:0 1.2em}
+.marquee i{font-style:normal;opacity:.55}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* SECTIONS */
+section{padding:96px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:44px}
+.sec-head h2{font-size:clamp(2.1rem,4.4vw,3.5rem);font-weight:900;color:var(--g800)}
+.sec-head p{max-width:30em;color:var(--muted);margin:0}
+.pill{display:inline-block;background:var(--g100);color:var(--g700);font-weight:800;border-radius:999px;padding:.35em .9em;font-size:.82rem}
+
+/* PRODUCTS */
+.products{background:var(--paper) radial-gradient(circle at 1px 1px, rgba(31,94,69,.08) 1px, transparent 0) 0 0/22px 22px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+@media (max-width:1080px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.grid{grid-template-columns:1fr}}
+.card{background:#fff;border-radius:var(--r);overflow:hidden;box-shadow:0 2px 0 rgba(15,51,36,.04),0 14px 40px -24px rgba(15,51,36,.45);display:flex;flex-direction:column;transition:transform .2s, box-shadow .2s;position:relative}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.card.picked{outline:3px solid var(--g400)}
+.card .art{aspect-ratio:5/4;display:grid;place-items:center;padding:18px;background:var(--tint,#e8f4ec)}
+.card .art img{max-height:100%;width:100%;aspect-ratio:778/688;object-fit:contain;background:#fff;border-radius:10px;box-shadow:0 10px 24px -14px rgba(0,0,0,.45);transform:rotate(-1.5deg);transition:transform .3s}
+.card:hover .art img{transform:rotate(0) scale(1.03)}
+.card .no{position:absolute;z-index:2;top:14px;left:14px;background:var(--g900);color:var(--cream);font:700 .78rem Manrope;border-radius:999px;padding:.3em .75em;letter-spacing:.06em}
+.card .body{padding:20px 20px 22px;display:flex;flex-direction:column;flex:1}
+.card h3{font-size:1.55rem;font-weight:900;color:var(--g800)}
+.card .alt{font-family:Fraunces,serif;font-style:italic;color:var(--muted);margin:.15em 0 .6em}
+.card .desc{font-size:.95rem;color:#3c4a40;margin:0 0 14px;flex:1}
+.buy{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:6px}
+.price{font:900 1.6rem Fraunces,serif;color:var(--g800)}
+.price small{font:600 .8rem Manrope;color:var(--muted);margin-left:4px}
+.step{display:flex;align-items:center;background:var(--g100);border-radius:999px;padding:4px}
+.step button{width:38px;height:38px;border-radius:50%;border:0;background:#fff;color:var(--g800);font:800 1.3rem/1 Manrope;cursor:pointer;box-shadow:0 2px 6px -2px rgba(0,0,0,.2)}
+.step button:hover{background:var(--g400);color:#fff}
+.step output{min-width:38px;text-align:center;font-weight:800;font-size:1.1rem}
+details{margin-top:14px;border-top:1px dashed #cfd9d2;padding-top:10px;font-size:.86rem;color:#3c4a40}
+summary{cursor:pointer;font-weight:800;color:var(--g700);list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::after{content:" +";}
+details[open] summary::after{content:" –"}
+details p{margin:.6em 0}
+table.nut{width:100%;border-collapse:collapse;margin-top:6px}
+table.nut td{padding:3px 0;border-bottom:1px solid #eef2ef}
+table.nut td:last-child{text-align:right;font-weight:700}
+
+/* CSS label for voileipä */
+.csslabel{container-type:inline-size;width:100%;aspect-ratio:778/688;background:#fff;border-radius:10px;position:relative;display:grid;place-items:center;box-shadow:0 10px 24px -14px rgba(0,0,0,.45);transform:rotate(1.5deg);overflow:hidden}
+.csslabel .oct{width:86%;margin-right:5%;background:var(--g700);color:#fff;text-align:center;padding:18px 10px 14px;clip-path:polygon(9% 0,91% 0,100% 30%,100% 70%,91% 100%,9% 100%,0 70%,0 30%);position:relative}
+.csslabel .oct::before{content:"";position:absolute;inset:5px;border:2px solid rgba(255,255,255,.65);clip-path:inherit}
+.csslabel .t1,.csslabel .t2{display:block;font-family:Fraunces,serif;font-weight:900;line-height:1.05;letter-spacing:.02em;text-transform:uppercase}.csslabel .t1{font-size:7cqw}.csslabel .t2{font-size:7.3cqw}
+.csslabel .t3{display:block;font-family:Fraunces,serif;font-style:italic;font-weight:500;font-size:5.6cqw;opacity:.9;margin-top:4px}
+.csslabel .badge{position:absolute;z-index:1;top:5%;left:46%;transform:translateX(-50%);width:21cqw;height:21cqw;border-radius:50%;background:var(--g800);color:#fff;font-family:Manrope;font-weight:800;font-size:3.2cqw;line-height:1.1;display:grid;place-items:center;text-align:center;border:3px solid #fff;outline:2px solid var(--g800)}
+.csslabel .num{position:absolute;bottom:9%;left:46%;transform:translateX(-50%);background:#4a4458;color:#fff;border-radius:50%;width:22cqw;height:22cqw;display:grid;place-items:center;font-family:Fraunces,serif;font-weight:900;font-size:6.5cqw;line-height:1;text-align:center;border:3px solid #fff;outline:2px solid #4a4458}
+.csslabel .num small{display:block;font-family:Manrope;font-weight:800;font-size:2.6cqw;letter-spacing:.12em;color:#9fe0b3}
+.csslabel .stripe{position:absolute;right:0;top:0;bottom:0;width:7%;background:repeating-linear-gradient(180deg,var(--g400) 0 22px,var(--g700) 22px 44px)}
+
+/* GIFT */
+.gift{background:var(--g900);color:var(--cream);position:relative;overflow:hidden}
+.gift::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.7) 1.2px,transparent 1.6px),radial-gradient(rgba(255,255,255,.35) 1px,transparent 1.4px);background-size:90px 90px,46px 46px;background-position:0 0,23px 17px;animation:snow 30s linear infinite;opacity:.5}
+@keyframes snow{to{background-position:0 900px,23px 477px}}
+.gift .wrap{position:relative;display:grid;grid-template-columns:1.05fr 1fr;gap:60px;align-items:center}
+@media (max-width:860px){.gift .wrap{grid-template-columns:1fr}}
+.gift-art{position:relative}
+.gift-art img{border-radius:18px;transform:rotate(-4deg);box-shadow:0 30px 60px -20px rgba(0,0,0,.6);border:10px solid #fff}
+.gift-art .bow{position:absolute;top:-22px;right:8%;background:var(--red);color:#fff;font:900 1rem Fraunces;padding:.5em 1em;border-radius:999px;transform:rotate(8deg);box-shadow:var(--shadow)}
+.gift h2{font-size:clamp(2.2rem,4.6vw,3.6rem);font-weight:900}
+.gift h2 em{color:var(--red2);font-style:italic;font-weight:500}
+.gift p{opacity:.88;max-width:32em}
+.deadline{display:inline-block;margin-top:14px;background:var(--red);color:#fff;font-weight:800;border-radius:14px;padding:10px 16px;line-height:1.35}
+.deadline small{display:block;font-weight:600;opacity:.9}
+.switch{display:flex;align-items:center;gap:14px;background:rgba(246,240,223,.08);border:1px solid rgba(246,240,223,.2);border-radius:18px;padding:16px 18px;margin-top:24px;cursor:pointer;user-select:none}
+.switch input{appearance:none;width:54px;height:30px;border-radius:999px;background:rgba(246,240,223,.25);position:relative;cursor:pointer;flex:none;transition:background .2s}
+.switch input::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:transform .2s}
+.switch input:checked{background:var(--red2)}
+.switch input:checked::after{transform:translateX(24px)}
+.switch b{display:block}
+.switch small{opacity:.75}
+.joulu-n{display:none;align-items:center;gap:14px;margin-top:14px;padding-left:4px}
+.joulu-n.show{display:flex}
+.joulu-n .step{background:rgba(246,240,223,.14)}
+
+/* ORDER */
+.order{background:var(--cream)}
+.order .wrap{display:grid;grid-template-columns:1.2fr .9fr;gap:40px;align-items:start}
+@media (max-width:900px){.order .wrap{grid-template-columns:1fr}}
+.form{background:#fff;border-radius:var(--r);padding:34px;box-shadow:var(--shadow)}
+.form h2{font-size:clamp(2rem,3.6vw,2.8rem);font-weight:900;color:var(--g800);margin-bottom:6px}
+.form .sub{color:var(--muted);margin:0 0 24px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:560px){.row{grid-template-columns:1fr}.form{padding:24px}}
+label.f{display:block;margin-bottom:16px;font-weight:800;font-size:.85rem;color:var(--g800)}
+label.f span.opt{font-weight:500;color:var(--muted)}
+input.t,textarea.t,select.t{display:block;width:100%;margin-top:6px;font:500 1rem Manrope;padding:.85em 1em;border:2px solid #dfe6e1;border-radius:14px;background:var(--paper);color:var(--ink);transition:border .15s, background .15s}
+input.t:focus,textarea.t:focus,select.t:focus{outline:0;border-color:var(--g400);background:#fff}
+textarea.t{min-height:90px;resize:vertical}
+.hp{position:absolute;left:-5000px}
+.hint{display:block;font-weight:500;color:var(--muted);font-size:.82rem;margin-top:3px}
+.info{display:grid;gap:12px;margin:8px 0 24px}
+.info div{display:flex;gap:12px;align-items:flex-start;background:var(--g100);border-radius:14px;padding:12px 14px;font-size:.92rem}
+.info i{font-style:normal;font-size:1.3rem;line-height:1}
+.err{color:var(--red);font-weight:700;min-height:1.4em;margin:10px 0 0}
+.summary{position:sticky;top:96px;background:var(--g800);color:var(--cream);border-radius:var(--r);padding:30px;box-shadow:var(--shadow);overflow:hidden}
+.summary::after{content:"";position:absolute;right:-60px;bottom:-60px;width:220px;height:220px;background:var(--logo) center/contain no-repeat;opacity:.08;transform:rotate(-12deg)}
+.summary h3{font-size:1.6rem;font-weight:900;margin-bottom:16px}
+.lines{list-style:none;padding:0;margin:0 0 16px;min-height:40px}
+.lines li{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(246,240,223,.14)}
+.lines li.empty{opacity:.65;border:0;font-style:italic}
+.tot{display:flex;justify-content:space-between;align-items:baseline;margin-top:8px}
+.tot b{font:900 2.6rem Fraunces,serif;color:var(--g400)}
+.save{color:#ffd37a;font-weight:800;min-height:1.4em}
+.mp{display:flex;align-items:center;gap:12px;margin-top:18px;padding:14px;border-radius:14px;background:rgba(246,240,223,.08);font-size:.9rem}
+.mp .logo{flex:none;width:44px;height:44px;border-radius:12px;background:#5a78ff;display:grid;place-items:center;color:#fff;font:900 .7rem Manrope;letter-spacing:.02em}
+.summary .btn{width:100%;justify-content:center;margin-top:22px;font-size:1.05rem}
+
+/* STORY */
+.story{padding:0;background:var(--g900);color:var(--cream)}
+.story .grid2{display:grid;grid-template-columns:1fr 1fr;min-height:520px}
+@media (max-width:860px){.story .grid2{grid-template-columns:1fr}}
+.story .ph{background-size:cover;background-position:center;min-height:320px}
+.story .tx{padding:72px 8%;display:flex;flex-direction:column;justify-content:center}
+.story h2{font-size:clamp(2rem,3.8vw,3rem);font-weight:900}
+.story p{opacity:.88}
+.facts{display:flex;gap:28px;flex-wrap:wrap;margin-top:22px}
+.facts b{display:block;font:900 2rem Fraunces;color:var(--g400)}
+.facts span{font-size:.85rem;opacity:.8}
+
+footer{background:#0b2619;color:rgba(246,240,223,.75);padding:56px 0 110px;font-size:.9rem}
+footer .wrap{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:center}
+footer img{height:70px;width:auto;opacity:.9}
+
+/* MOBILE BAR */
+.bar{visibility:hidden;position:fixed;left:12px;right:12px;bottom:12px;z-index:40;background:var(--g900);color:var(--cream);border-radius:999px;display:flex;align-items:center;justify-content:space-between;padding:8px 8px 8px 22px;box-shadow:0 14px 40px -10px rgba(0,0,0,.55);transform:translateY(140%);transition:transform .3s}
+.bar.show{transform:none;visibility:visible}
+.bar b{font:900 1.3rem Fraunces}
+.bar .btn{padding:.8em 1.3em}
+@media (min-width:901px){.bar{left:auto;right:24px;bottom:24px;width:360px}}
+
+/* DONE */
+.done{position:fixed;inset:0;z-index:60;background:rgba(15,51,36,.72);backdrop-filter:blur(6px);display:none;place-items:center;padding:20px}
+.done.show{display:grid}
+.done .box{background:var(--paper);border-radius:28px;max-width:520px;width:100%;padding:36px;text-align:center;box-shadow:var(--shadow);animation:pop .35s ease-out;max-height:92vh;overflow:auto}
+@keyframes pop{from{transform:scale(.9);opacity:0}}
+.done .check{width:78px;height:78px;border-radius:50%;background:var(--g400);color:#fff;display:grid;place-items:center;font-size:2.4rem;margin:0 auto 14px}
+.done h2{font-size:2.2rem;font-weight:900;color:var(--g800)}
+.done .nr{font-weight:800;color:var(--muted);margin:.4em 0 1.2em}
+.paycard{background:var(--g800);color:var(--cream);border-radius:20px;padding:22px;text-align:left}
+.paycard .amt{font:900 2.4rem Fraunces;color:var(--g400)}
+.copy{display:flex;align-items:center;justify-content:space-between;gap:10px;background:rgba(246,240,223,.1);border-radius:14px;padding:10px 12px 10px 16px;margin-top:10px}
+.copy b{font:800 1.15rem Manrope;letter-spacing:.02em;white-space:nowrap}
+.copy small{display:block;opacity:.7;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.copy button{border:0;border-radius:999px;background:var(--cream);color:var(--g900);font:800 .8rem Manrope;padding:.6em 1em;cursor:pointer}
+.done .pick{margin:18px 0 6px;color:var(--muted)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s, transform .7s}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+<title>Pitkäsen Kurkkutila · Kurkkupurkit</title>
+<meta name="description" content="Rapeat maustekurkut Perniön Nurkkilasta. Tilaa purkit verkosta ja nouda kylmiöstä joka päivä 9–18.">
+<meta property="og:title" content="Pitkäsen Kurkkutila · Kurkkupurkit">
+<meta property="og:description" content="Rapeat maustekurkut omalta pellolta purkkiin. 6 € / purkki, 3 tai enemmän 5 € / purkki.">
+<meta property="og:image" content="https://meroos.github.io/kurkkupurkit/img/jars.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" href="img/logo-green.png">
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" aria-label="Pitkäsen Kurkkutila"><img id="navlogo" alt="Pitkäsen Kurkkutila"></a>
+    <div class="nav-links">
+      <a href="#tuotteet" data-i="navProducts"></a>
+      <a href="#joulu" data-i="navGift"></a>
+      <a href="#tilaa" data-i="navOrder"></a>
+      <div class="lang" role="group" aria-label="Kieli / Språk / Language">
+        <button data-lang="fi" class="on">FI</button><button data-lang="sv">SV</button><button data-lang="en">EN</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-bg" id="herobg"></div>
+  <div class="stamp" aria-hidden="true"><div><span>3+ <span data-i="jarsWord"></span></span><b>5 €</b><small data-i="stampSmall"></small></div></div>
+  <div class="wrap">
+    <span class="eyebrow" data-i="heroEyebrow"></span>
+    <h1 data-i="heroTitle"></h1>
+    <p class="lead" data-i="heroLead"></p>
+    <div class="hero-cta">
+      <a class="btn" href="#tuotteet" data-i="heroBtn"></a>
+      <a class="ghost" href="#joulu" data-i="heroGhost"></a>
+    </div>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true"><div id="marq"></div></div>
+
+<section class="products" id="tuotteet">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><span class="pill" data-i="prodPill"></span><h2 data-i="prodTitle" style="margin-top:.3em"></h2></div>
+      <p data-i="prodText"></p>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section class="gift" id="joulu">
+  <div class="wrap">
+    <div class="gift-art reveal"><img id="jouluimg" alt=""><div class="bow" data-i="giftBow"></div></div>
+    <div class="reveal">
+      <span class="eyebrow" style="color:var(--red2)" data-i="giftEyebrow"></span>
+      <h2 data-i="giftTitle" style="margin:.3em 0 .4em"></h2>
+      <p data-i="giftText"></p>
+      <div class="deadline" data-i="giftDeadline"></div>
+      <label class="switch"><input type="checkbox" id="jouluBox"><span><b data-i="giftSwitch"></b><small data-i="giftSwitchSmall"></small></span></label>
+      <div class="joulu-n" id="jouluN">
+        <span data-i="giftHowMany"></span>
+        <div class="step"><button type="button" data-j="-1">−</button><output id="jouluKpl">0</output><button type="button" data-j="1">+</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="order" id="tilaa">
+  <div class="wrap">
+    <form class="form reveal" id="form" novalidate>
+      <h2 data-i="formTitle"></h2>
+      <p class="sub" data-i="formSub"></p>
+      <div class="row">
+        <label class="f"><span data-i="fName"></span><input class="t" name="nimi" autocomplete="name" required></label>
+        <label class="f"><span data-i="fPhone"></span><input class="t" name="puhelin" type="tel" autocomplete="tel" required></label>
+      </div>
+      <div class="row">
+        <label class="f"><span data-i="fDate"></span><input class="t" name="noutoPvm" type="date" required></label>
+        <label class="f"><span data-i="fTime"></span><select class="t" name="noutoAika" required></select></label>
+      </div>
+      <label class="f"><span data-i="fEmail"></span> <span class="opt" data-i="fEmailOpt"></span><input class="t" name="email" type="email" autocomplete="email"></label>
+      <label class="f"><span data-i="fMsg"></span> <span class="opt" data-i="optional"></span><small class="hint" data-i="fMsgHint"></small><textarea class="t" name="viesti" data-ph="fMsgPh"></textarea></label>
+      <input class="hp" name="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="info">
+        <div><i>📍</i><span data-i="infoPickup"></span></div>
+        <div><i>📱</i><span data-i="infoPay"></span></div>
+      </div>
+      <p class="err" id="err" role="alert"></p>
+    </form>
+
+    <aside class="summary reveal" id="summary">
+      <h3 data-i="sumTitle"></h3>
+      <ul class="lines" id="lines"></ul>
+      <div class="save" id="save"></div>
+      <div class="tot"><span data-i="sumTotal"></span><b id="total">0 €</b></div>
+      <div class="mp"><div class="logo">Mobile<br>Pay</div><span data-i="sumPay"></span></div>
+      <button class="btn" id="send" type="button" disabled data-i="sumBtn"></button>
+    </aside>
+  </div>
+</section>
+
+<section class="story">
+  <div class="grid2">
+    <div class="ph" id="storyph"></div>
+    <div class="tx reveal">
+      <span class="eyebrow" data-i="storyEyebrow"></span>
+      <h2 data-i="storyTitle" style="margin:.35em 0 .5em"></h2>
+      <p data-i="storyText"></p>
+      <div class="facts">
+        <div><b>100 %</b><span data-i="fact1"></span></div>
+        <div><b>680 g</b><span data-i="fact2"></span></div>
+        <div><b>4</b><span data-i="fact3"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <img id="footlogo" alt="">
+    <div>
+      <b>Pitkäsen Kurkkutila Oy</b> · Y-tunnus 2595753-8<br>
+      Laukantie 151, 25610 Salo · <span data-i="footPickup"></span><br>
+      040 079 4090 · <a href="mailto:jari.pitkanen09@gmail.com">jari.pitkanen09@gmail.com</a>
+    </div>
+    <div style="max-width:24em" data-i="footNote"></div>
+  </div>
+</footer>
+
+<div class="bar" id="bar"><span><span id="barN"></span> · <b id="barT">0 €</b></span><a class="btn" href="#tilaa" data-i="barBtn"></a></div>
+
+<div class="done" id="done" role="dialog" aria-modal="true">
+  <div class="box">
+    <div class="check">✓</div>
+    <h2 data-i="doneTitle"></h2>
+    <p class="nr" id="doneNr"></p>
+    <div class="paycard">
+      <div data-i="donePay"></div>
+      <div class="amt" id="doneAmt"></div>
+      <div class="copy"><span><small data-i="doneNumber"></small><b id="mpNum"></b></span><button type="button" data-copy="mpNum" data-i="copy"></button></div>
+      <div class="copy"><span><small data-i="doneMessage"></small><b id="mpMsg"></b></span><button type="button" data-copy="mpMsg" data-i="copy"></button></div>
+    </div>
+    <p class="pick" id="donePick" style="font-weight:800;color:var(--g800)"></p>
+    <p style="margin:6px 0 4px"><a class="btn" id="routeBtn" target="_blank" rel="noopener" data-i="routeBtn"></a></p>
+    <p class="pick" id="doneMail"></p>
+    <button class="btn dark" type="button" id="doneClose" data-i="doneClose"></button>
+  </div>
+</div>
+
+<script>
+var KUVAT = {"jars": "img/jars.jpg", "harvest": "img/harvest.jpg", "labelKoru": "img/label-koru.jpg", "labelChili": "img/label-chili.jpg", "labelValkosipuli": "img/label-valkosipuli.jpg", "labelJoulu": "img/label-joulu.jpg", "labelVoileipa": "img/label-voileipa.jpg", "logoCream": "img/logo-cream.png", "logoGreen": "img/logo-green.png"};
+var ASET = {"mobilepay": "040 079 4090", "hintaKpl": 6, "hintaMaara": 5, "reitti": "https://www.google.com/maps/dir/?api=1&destination=60.142838,23.043580"};
+var API = 'https://script.google.com/macros/s/AKfycbzNFtjHZAIpZDyJ0rxpxFaMdAgb6eJlf4M0Lxg96fLWg_Ir6fpuqPh-yfmWu6AfJI7J/exec';
+
+var ING = {
+  base: { fi: 'kurkku (suomalainen), vesi, sokeri, etikka, suola, <b>SINAPINSIEMEN</b>, mustaherukan lehti, tilli, valkosipuli, säilöntäaine (E 211), stabilointiaine (E 509)',
+          sv: 'gurka (finsk), vatten, socker, ättika, salt, <b>SENAPSFRÖ</b>, dill, svartvinbärsblad, vitlök, konserveringsmedel (E 211), stabiliseringsmedel (E 509)',
+          en: 'cucumber (Finnish), water, sugar, vinegar, salt, <b>MUSTARD SEED</b>, blackcurrant leaf, dill, garlic, preservative (E 211), stabiliser (E 509)' },
+  chili:{ fi: 'kurkku (suomalainen), vesi, sokeri, etikka, suola, chili, <b>SINAPINSIEMEN</b>, mustaherukan lehti, tilli, valkosipuli, säilöntäaine (E 211), stabilointiaine (E 509)',
+          sv: 'gurka (finsk), vatten, socker, ättika, salt, chili, <b>SENAPSFRÖ</b>, dill, svartvinbärsblad, vitlök, konserveringsmedel (E 211), stabiliseringsmedel (E 509)',
+          en: 'cucumber (Finnish), water, sugar, vinegar, salt, chilli, <b>MUSTARD SEED</b>, blackcurrant leaf, dill, garlic, preservative (E 211), stabiliser (E 509)' },
+  vs:   { fi: 'kurkku (suomalainen), vesi, sokeri, etikka, suola, valkosipuli, <b>SINAPINSIEMEN</b>, mustaherukan lehti, tilli, säilöntäaine (E 211), stabilointiaine (E 509)',
+          sv: 'gurka (finsk), vatten, socker, ättika, salt, vitlök, <b>SENAPSFRÖ</b>, svartvinbärsblad, dill, konserveringsmedel (E 211), stabiliseringsmedel (E 509)',
+          en: 'cucumber (Finnish), water, sugar, vinegar, salt, garlic, <b>MUSTARD SEED</b>, blackcurrant leaf, dill, preservative (E 211), stabiliser (E 509)' }
+};
+var NUT_A = ['130 kJ / 31 kcal','0,2 g','0 g','1,1 g','0 g','0 g','2,5 g'];
+var NUT_V = ['130 kJ / 39 kcal','0,2 g','0 g','9,8 g','7,1 g','0 g','1,9 g'];
+
+var P = [
+  { id:'koru', no:'Nº1', img:'labelKoru', tint:'#e5f3ea', ing:'base', nut:NUT_A,
+    fi:{n:'Koruviipaleet', a:'Skivad kryddgurka', d:'Rapeat koruviipaleet makeahkossa mausteliemessä. Talon klassikko leivälle, burgeriin ja arkiruoan seuraksi.'},
+    sv:{n:'Skivad kryddgurka', a:'Koruviipaleet', d:'Krispiga, krusskurna gurkskivor i söt kryddlag. Gårdens klassiker på smörgåsen, i burgaren och till vardagsmaten.'},
+    en:{n:'Crinkle-cut pickles', a:'Koruviipaleet', d:'Crunchy crinkle-cut cucumber slices in a sweetish spiced brine. The house classic for sandwiches, burgers and everyday meals.'} },
+  { id:'valkosipuli', no:'Nº4', img:'labelValkosipuli', tint:'#eeeaf3', ing:'vs', nut:NUT_A,
+    fi:{n:'Valkosipulikurkut', a:'Skivad vitlöksgurka', d:'Koruviipaleet, joiden mausteena on kotimainen valkosipuli. Täyteläinen ja reilu maku.'},
+    sv:{n:'Vitlöksgurka', a:'Valkosipulikurkut', d:'Krusskurna skivor kryddade med inhemsk vitlök. Fyllig och rejäl smak.'},
+    en:{n:'Garlic pickles', a:'Valkosipulikurkut', d:'Crinkle-cut slices flavoured with Finnish garlic. Full, hearty taste.'} },
+  { id:'voileipa', no:'Nº6', img:'labelVoileipa', tint:'#e2ecf8', ing:'base', nut:NUT_V,
+    fi:{n:'Voileipäkurkut', a:'Smörgåsgurkor', d:'Pitkiä viipaleita, jotka peittävät koko leivän. Helppo nostaa purkista suoraan voileivälle.'},
+    sv:{n:'Smörgåsgurkor', a:'Voileipäkurkut', d:'Långa skivor som täcker hela smörgåsen. Lätta att lyfta direkt ur burken.'},
+    en:{n:'Sandwich pickles', a:'Voileipäkurkut', d:'Long slices that cover the whole sandwich. Easy to lift straight from the jar onto your bread.'} },
+  { id:'chili', no:'Nº2', img:'labelChili', tint:'#fbe7e8', ing:'chili', nut:NUT_A,
+    fi:{n:'Chilikurkut', a:'Skivad kryddgurka med chili', d:'Koruviipaleet chilillä maustettuna. Makeutta ja sopivasti potkua.'},
+    sv:{n:'Chiligurka', a:'Chilikurkut', d:'Krusskurna skivor kryddade med chili. Sötma och lagom med hetta.'},
+    en:{n:'Chilli pickles', a:'Chilikurkut', d:'Crinkle-cut slices spiced with chilli. Sweetness with just the right kick.'} }
+];
+
+var T = {
+ fi:{
+  navProducts:'Tuotteet', navGift:'Joululahjaksi', navOrder:'Tilaa',
+  jarsWord:'purkkia', stampSmall:'/ purkki<br>yksittäin 6 €',
+  heroEyebrow:'Suoraan tilalta · Perniön Nurkkila',
+  heroTitle:'Rapeat kurkut <em>omalta pellolta</em> purkkiin.',
+  heroLead:'Neljä makua kotimaisesta avomaankurkusta. Valitse purkit, maksa MobilePaylla ja nouda tilauksesi Roitmäentien kylmiöstä joka päivä klo 9–18.',
+  heroBtn:'Valitse purkit →', heroGhost:'Joululahjaksi 🎄',
+  marquee:['100 % kotimainen','Rapeat','Avomaankurkku','Perniön Nurkkilasta','3+ purkkia 5 € / kpl','Nouto joka päivä 9–18','Tilaa jouluksi viimeistään 20.12.','Rajoitettu erä'],
+  prodPill:'680 g purkki · 6 € · 3+ purkkia 5 € / kpl', prodTitle:'Valitse suosikkisi',
+  prodText:'Kaikki maut ovat samanhintaisia. Yksi purkki maksaa 6 €. Kun tilaat vähintään kolme purkkia, jokainen purkki maksaa 5 €, ja voit yhdistellä makuja vapaasti. Rajoitettu erä: tilaa jouluksi viimeistään 20.12. tai niin kauan kuin purkkeja riittää.',
+  details:'Ainesosat ja ravintoarvot', ingr:'Ainesosat', weight:'Paino 680 g, josta kurkkua n. 310 g.',
+  storage:'Säilytys avaamattomana huoneenlämmössä, avattuna jääkaapissa. Parasta ennen: katso purkin pohja.',
+  nutHead:'Ravintosisältö / 100 g', nut:['Energia','Rasva','josta tyydyttynyttä','Hiilihydraatit','josta sokereita','Proteiini','Suola'],
+  allergy:'Allergeeni: sinappi.',
+  giftDeadline:'🎄 Tilaa jouluksi viimeistään 20.12.<small>tai niin kauan kuin purkkeja riittää. Rajoitettu erä!</small>',
+  giftBow:'Hyvää Joulua!', giftEyebrow:'Joululahjaksi',
+  giftTitle:'Purkki, joka <em>ilahduttaa</em>.',
+  giftText:'Saat purkit halutessasi joulun erikoisetiketillä. Erikoisetiketti on sama kaikissa purkeissa riippumatta siitä, mitä makua tilaat, ja siinä lukee kuten kuvassa: <b>Kurkkutilan Koruviipaleet · Christmas Edition · Hyvää Joulua! God Jul!</b> Purkit sopivat valmiiksi lahjaksi työkaverille, naapurille tai joulupöytään.',
+  giftSwitch:'Haluan jouluetiketin', giftSwitchSmall:'Sama etiketti kaikille maille · ei lisähintaa', giftHowMany:'Montako purkkia jouluetiketillä?',
+  formTitle:'Tilaus', formSub:'Täytä yhteystietosi. Nouto Roitmäentien kylmiöstä joka päivä klo 9–18.',
+  routeBtn:'🗺️ Reitti kylmiölle', routeLink:'Reitti Roitmäentien kylmiölle (Google Maps)',
+  fDate:'Noutopäivä', fTime:'Noutoaika', timePh:'Valitse aika', errPick:'Valitse noutopäivä ja -aika.',
+  fName:'Nimi', fPhone:'Puhelin', fEmail:'Sähköposti', fEmailOpt:'(vahvistus sähköpostiin)', fMsg:'Viesti', optional:'(vapaaehtoinen)',
+  infoPickup:'<b>Nouto:</b> Roitmäentien kylmiöstä joka päivä klo 9–18. Perniön ja Särkisalon alueelle voimme toimittaa sopimuksen mukaan, kirjoita toiveesi viestikenttään.',
+  fMsgHint:'Toivotko toimitusta Perniön tai Särkisalon alueelle? Kirjoita toiveesi tähän, niin sovitaan erikseen.', fMsgPh:'Esim. toimitustoive, osoite tai sopiva noutoaika',
+  infoPay:'<b>Maksu vain MobilePaylla</b> numeroon '+ASET.mobilepay+'. Saat maksuohjeen heti tilauksen jälkeen.',
+  sumTitle:'Ostoskori', sumEmpty:'Ei vielä purkkeja. Valitse maut yllä.', sumTotal:'Yhteensä',
+  sumPay:'Maksu MobilePaylla tilauksen jälkeen. Tilauksen viestiksi tulee tilausnumero.',
+  sumBtn:'Lähetä tilaus', sending:'Lähetetään…', save:'Säästät {s} € (vähintään 3 purkkia: 5 € / purkki)',
+  jars:function(n){return n===1?'1 purkki':n+' purkkia';},
+  barBtn:'Tilaa',
+  storyEyebrow:'Pitkäsen Kurkkutila',
+  storyTitle:'Kasvatettu Perniön Nurkkilassa, avomaalla.',
+  storyText:'Kurkut kasvavat avomaalla omilla pelloillamme Perniön Nurkkilassa. Kesän sato säilötään rapeiksi viipaleiksi, joten kesän maku riittää koko talveksi.',
+  fact1:'kotimainen kurkku', fact2:'purkin paino', fact3:'makua valittavana',
+  footPickup:'nouto Roitmäentien kylmiöstä joka päivä klo 9–18',
+  footNote:'Tilaukset käsitellään Pitkäsen Kurkkutila Oy:ssä. Yhteystietojasi käytetään vain tilauksen hoitamiseen.',
+  errName:'Täytä nimi ja puhelinnumero.', errEmail:'Tarkista sähköpostiosoite.', errNet:'Lähetys ei onnistunut. Yritä uudelleen tai soita 040 079 4090.',
+  donePickTxt:'Nouto {t}, Roitmäentien kylmiö.',
+  doneTitle:'Kiitos tilauksesta!', doneNr:'Tilausnumero #{n}', donePay:'Maksa MobilePaylla', doneNumber:'Numero', doneMessage:'Viesti',
+  msgWord:'Tilaus', copy:'Kopioi', copied:'Kopioitu ✓',
+  donePickup:'Nouda tilauksesi Roitmäentien kylmiöstä joka päivä klo 9–18.',
+  doneMail:'Vahvistus lähti osoitteeseen {e}.', doneClose:'Valmis'
+ },
+ sv:{
+  navProducts:'Produkter', navGift:'Julklapp', navOrder:'Beställ',
+  jarsWord:'burkar', stampSmall:'/ burk<br>en burk 6 €',
+  heroEyebrow:'Direkt från gården · Nurkkila, Bjärnå',
+  heroTitle:'Krispig gurka <em>från vår egen åker</em>, rakt i burken.',
+  heroLead:'Fyra smaker av inhemsk frilandsgurka. Välj burkar, betala med MobilePay och hämta beställningen från kylrummet på Roitmäentie varje dag kl. 9–18.',
+  heroBtn:'Välj burkar →', heroGhost:'Som julklapp 🎄',
+  marquee:['100 % inhemsk','Krispig','Frilandsgurka','Från Nurkkila i Bjärnå','3+ burkar 5 € / st','Avhämtning varje dag 9–18','Beställ till jul senast 20.12.','Begränsat parti'],
+  prodPill:'Burk 680 g · 6 € · 3+ burkar 5 € / st', prodTitle:'Välj din favorit',
+  prodText:'Alla smaker kostar lika mycket. En burk kostar 6 €. När du beställer minst tre burkar kostar varje burk 5 €, och du kan blanda smakerna fritt. Begränsat parti: beställ till jul senast 20.12. eller så länge lagret räcker.',
+  details:'Ingredienser och näringsvärde', ingr:'Ingredienser', weight:'Vikt 680 g, varav gurka ca 310 g.',
+  storage:'Förvaras oöppnad i rumstemperatur, öppnad i kylskåp. Bäst före: se burkens botten.',
+  nutHead:'Näringsinnehåll / 100 g', nut:['Energi','Fett','varav mättat fett','Kolhydrater','varav sockerarter','Protein','Salt'],
+  allergy:'Allergen: senap.',
+  giftDeadline:'🎄 Beställ till jul senast 20.12.<small>eller så länge lagret räcker. Begränsat parti!</small>',
+  giftBow:'God Jul!', giftEyebrow:'Som julklapp',
+  giftTitle:'En burk som <em>gläder</em>.',
+  giftText:'Om du vill får du burkarna med en särskild juletikett. Juletiketten är densamma på alla burkar oavsett vilken smak du beställer, och texten är som på bilden: <b>Kurkkutilan Koruviipaleet · Christmas Edition · Hyvää Joulua! God Jul!</b> Burkarna passar som färdig present till arbetskamraten, grannen eller julbordet.',
+  giftSwitch:'Jag vill ha juletikett', giftSwitchSmall:'Samma etikett för alla smaker · inget tillägg i priset', giftHowMany:'Hur många burkar med juletikett?',
+  formTitle:'Beställning', formSub:'Fyll i dina kontaktuppgifter. Avhämtning från kylrummet på Roitmäentie varje dag kl. 9–18.',
+  routeBtn:'🗺️ Vägbeskrivning till kylrummet', routeLink:'Vägbeskrivning till kylrummet på Roitmäentie (Google Maps)',
+  fDate:'Avhämtningsdag', fTime:'Tid', timePh:'Välj tid', errPick:'Välj dag och tid för avhämtningen.',
+  fName:'Namn', fPhone:'Telefon', fEmail:'E-post', fEmailOpt:'(bekräftelse per e-post)', fMsg:'Meddelande', optional:'(frivilligt)',
+  infoPickup:'<b>Avhämtning:</b> från kylrummet på Roitmäentie varje dag kl. 9–18. Inom Bjärnå och Finby kan vi leverera enligt överenskommelse, skriv ditt önskemål i meddelandefältet.',
+  fMsgHint:'Önskar du leverans inom Bjärnå eller Finby? Skriv ditt önskemål här, så kommer vi överens.', fMsgPh:'T.ex. leveransönskemål, adress eller lämplig avhämtningstid',
+  infoPay:'<b>Betalning endast med MobilePay</b> till numret '+ASET.mobilepay+'. Du får betalningsanvisningen direkt efter beställningen.',
+  sumTitle:'Varukorg', sumEmpty:'Inga burkar ännu. Välj smaker ovan.', sumTotal:'Totalt',
+  sumPay:'Betalning med MobilePay efter beställningen. Ange beställningsnumret som meddelande.',
+  sumBtn:'Skicka beställningen', sending:'Skickas…', save:'Du sparar {s} € (minst 3 burkar: 5 € / burk)',
+  jars:function(n){return n===1?'1 burk':n+' burkar';},
+  barBtn:'Beställ',
+  storyEyebrow:'Pitkäsen Kurkkutila',
+  storyTitle:'Odlad på friland i Nurkkila, Bjärnå.',
+  storyText:'Gurkorna växer på friland på våra egna åkrar i Nurkkila i Bjärnå. Sommarens skörd läggs in till krispiga skivor, så att sommarens smak räcker hela vintern.',
+  fact1:'inhemsk gurka', fact2:'burkens vikt', fact3:'smaker att välja',
+  footPickup:'avhämtning från kylrummet på Roitmäentie varje dag kl. 9–18',
+  footNote:'Beställningarna behandlas av Pitkäsen Kurkkutila Oy. Dina kontaktuppgifter används endast för att sköta beställningen.',
+  errName:'Fyll i namn och telefonnummer.', errEmail:'Kontrollera e-postadressen.', errNet:'Det gick inte att skicka. Försök igen eller ring 040 079 4090.',
+  donePickTxt:'Avhämtning {t}, kylrummet på Roitmäentie.',
+  doneTitle:'Tack för din beställning!', doneNr:'Beställningsnummer #{n}', donePay:'Betala med MobilePay', doneNumber:'Nummer', doneMessage:'Meddelande',
+  msgWord:'Beställning', copy:'Kopiera', copied:'Kopierat ✓',
+  donePickup:'Hämta din beställning från kylrummet på Roitmäentie varje dag kl. 9–18.',
+  doneMail:'Bekräftelsen skickades till {e}.', doneClose:'Klar'
+ },
+ en:{
+  navProducts:'Products', navGift:'Christmas gifts', navOrder:'Order',
+  jarsWord:'jars', stampSmall:'per jar<br>single jar 6 €',
+  heroEyebrow:'Straight from the farm · Nurkkila, Perniö',
+  heroTitle:'Crunchy pickles <em>from our own fields</em>, straight into the jar.',
+  heroLead:'Four flavours of Finnish field-grown cucumber. Choose your jars, pay with MobilePay and pick up your order from the cold store on Roitmäentie, any day 9–18.',
+  heroBtn:'Choose jars →', heroGhost:'Christmas gifts 🎄',
+  marquee:['100 % Finnish','Crunchy','Field-grown','From Nurkkila, Perniö','3+ jars 5 € each','Pickup daily 9–18','Order for Christmas by 20.12.','Limited batch'],
+  prodPill:'680 g jar · 6 € · 3+ jars 5 € each', prodTitle:'Choose your favourite',
+  prodText:'All flavours cost the same. One jar is 6 €. When you order at least three jars, every jar costs 5 €, and you can mix flavours freely. Limited batch: order for Christmas by 20.12. or while stocks last.',
+  details:'Ingredients and nutrition', ingr:'Ingredients', weight:'Weight 680 g, of which cucumber approx. 310 g.',
+  storage:'Store unopened at room temperature, refrigerate after opening. Best before: see the bottom of the jar.',
+  nutHead:'Nutrition / 100 g', nut:['Energy','Fat','of which saturates','Carbohydrate','of which sugars','Protein','Salt'],
+  allergy:'Allergen: mustard.',
+  giftDeadline:'🎄 Order for Christmas by 20.12.<small>or while stocks last. Limited batch!</small>',
+  giftBow:'Merry Christmas!', giftEyebrow:'Christmas gifts',
+  giftTitle:'A jar that <em>brings joy</em>.',
+  giftText:'If you like, you can get your jars with a special Christmas label. The Christmas label is the same on every jar, whichever flavour you order, and it reads as in the picture: <b>Kurkkutilan Koruviipaleet · Christmas Edition · Hyvää Joulua! God Jul!</b> The jars make a ready gift for a colleague, a neighbour or the Christmas table.',
+  giftSwitch:'I want the Christmas label', giftSwitchSmall:'Same label for all flavours · no extra cost', giftHowMany:'How many jars with the Christmas label?',
+  formTitle:'Order', formSub:'Fill in your details. Pickup from the cold store on Roitmäentie, any day 9–18.',
+  routeBtn:'🗺️ Directions to the cold store', routeLink:'Directions to the cold store on Roitmäentie (Google Maps)',
+  fDate:'Pickup day', fTime:'Pickup time', timePh:'Choose a time', errPick:'Please choose a pickup day and time.',
+  fName:'Name', fPhone:'Phone', fEmail:'Email', fEmailOpt:'(confirmation by email)', fMsg:'Message', optional:'(optional)',
+  infoPickup:'<b>Pickup:</b> from the cold store on Roitmäentie, any day 9–18. We can deliver in the Perniö and Särkisalo area by arrangement; write your request in the message field.',
+  fMsgHint:'Would you like delivery in the Perniö or Särkisalo area? Write your request here and we will arrange it separately.', fMsgPh:'E.g. delivery request, address or a suitable pickup time',
+  infoPay:'<b>Payment by MobilePay only</b> to '+ASET.mobilepay+'. You will get the payment instructions right after ordering.',
+  sumTitle:'Basket', sumEmpty:'No jars yet. Choose your flavours above.', sumTotal:'Total',
+  sumPay:'Pay with MobilePay after ordering. Use your order number as the message.',
+  sumBtn:'Send order', sending:'Sending…', save:'You save {s} € (3+ jars: 5 € each)',
+  jars:function(n){return n===1?'1 jar':n+' jars';},
+  barBtn:'Order',
+  storyEyebrow:'Pitkäsen Kurkkutila',
+  storyTitle:'Grown in the open field in Nurkkila, Perniö.',
+  storyText:'Our cucumbers grow in the open field on our own land in Nurkkila, Perniö. The summer harvest is preserved as crunchy slices, so the taste of summer lasts all winter.',
+  fact1:'Finnish cucumber', fact2:'jar weight', fact3:'flavours to choose from',
+  footPickup:'pickup from the cold store on Roitmäentie, any day 9–18',
+  footNote:'Orders are handled by Pitkäsen Kurkkutila Oy. Your contact details are only used to handle your order.',
+  errName:'Please fill in your name and phone number.', errEmail:'Please check the email address.', errNet:'Sending failed. Please try again or call 040 079 4090.',
+  donePickTxt:'Pickup {t}, the cold store on Roitmäentie.',
+  doneTitle:'Thank you for your order!', doneNr:'Order number #{n}', donePay:'Pay with MobilePay', doneNumber:'Number', doneMessage:'Message',
+  msgWord:'Order', copy:'Copy', copied:'Copied ✓',
+  donePickup:'Pick up your order from the cold store on Roitmäentie, any day 9–18.',
+  doneMail:'A confirmation was sent to {e}.', doneClose:'Done'
+ }
+};
+
+var lang = 'fi', qty = {koru:0, valkosipuli:0, voileipa:0, chili:0}, joulu = false, jouluKpl = 0, lastOrder = null;
+function $(s, r){ return (r||document).querySelector(s); }
+function $$(s, r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); }
+function price(n){ return n*(n>=3 ? ASET.hintaMaara : ASET.hintaKpl); }
+function total(){ var n=0; for (var k in qty) n+=qty[k]; return n; }
+
+// images
+$('#herobg').style.backgroundImage = 'url("'+KUVAT.jars+'")';
+$('#navlogo').src = KUVAT.logoGreen; $('#footlogo').src = KUVAT.logoCream;
+$('#jouluimg').src = KUVAT.labelJoulu;
+$('#storyph').style.backgroundImage = 'url("'+(KUVAT.harvest||KUVAT.cucumbers)+'")';
+document.documentElement.style.setProperty('--logo', 'url("'+KUVAT.logoCream+'")');
+
+function renderGrid(){
+  var t = T[lang];
+  $('#grid').innerHTML = P.map(function(p){
+    var art = p.img && KUVAT[p.img]
+      ? '<img src="'+KUVAT[p.img]+'" alt="'+p[lang].n+'" loading="lazy">'
+      : '<div class="csslabel"><span class="badge">100%<br>KOTI-<br>MAINEN</span><div class="oct"><span class="t1">Kurkkutilan</span><span class="t2">Voileipäkurkut</span><span class="t3">Smörgåsgurkor</span></div><span class="num"><span>Nº6<small>RAPEAT</small></span></span><span class="stripe"></span></div>';
+    var nut = t.nut.map(function(l,i){ return '<tr><td>'+(i===2||i===4?'&nbsp;&nbsp;'+l:l)+'</td><td>'+p.nut[i]+'</td></tr>'; }).join('');
+    return '<article class="card reveal'+(qty[p.id]?' picked':'')+'" data-id="'+p.id+'" style="--tint:'+p.tint+'">'+
+      '<span class="no">'+p.no+'</span><div class="art">'+art+'</div>'+
+      '<div class="body"><h3>'+p[lang].n+'</h3><div class="alt">'+p[lang].a+'</div><p class="desc">'+p[lang].d+'</p>'+
+      '<div class="buy"><div class="price">6 €<small>/ 680 g</small></div>'+
+      '<div class="step"><button type="button" data-q="-1" aria-label="−">−</button><output>'+qty[p.id]+'</output><button type="button" data-q="1" aria-label="+">+</button></div></div>'+
+      '<details><summary>'+t.details+'</summary><p><b>'+t.ingr+':</b> '+ING[p.ing][lang]+'.</p><p>'+t.allergy+' '+t.weight+'</p><p>'+t.storage+'</p>'+
+      '<b>'+t.nutHead+'</b><table class="nut">'+nut+'</table></details></div></article>';
+  }).join('');
+  observe();
+}
+
+function applyLang(l){
+  lang = l; document.documentElement.lang = l;
+  try { localStorage.setItem('kurkku-lang', l); } catch(e){}
+  var t = T[l];
+  $$('[data-i]').forEach(function(el){ var v=t[el.getAttribute('data-i')]; if (typeof v==='string') el.innerHTML=v; });
+  $$('[data-ph]').forEach(function(el){ el.placeholder=t[el.getAttribute('data-ph')]||''; });
+  fillTimes();
+  $$('.lang button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-lang')===l); });
+  var m = t.marquee.map(function(x){return '<span>'+x+'</span><i>✦</i>';}).join('');
+  $('#marq').innerHTML = m+m+m+m;
+  renderGrid(); update();
+  if (lastOrder) fillDone(lastOrder);
+}
+
+function update(){
+  var t=T[lang], n=total(), sum=price(n);
+  if (joulu){ if (jouluKpl===0 || jouluKpl>n) jouluKpl=n; } else jouluKpl=0;
+  $('#jouluKpl').textContent = jouluKpl;
+  $('#jouluN').classList.toggle('show', joulu);
+  var lines = P.filter(function(p){return qty[p.id];}).map(function(p){
+    return '<li><span>'+qty[p.id]+' × '+p[lang].n+'</span><span>'+(qty[p.id]*ASET.hintaKpl)+' €</span></li>'; });
+  if (joulu && jouluKpl) lines.push('<li><span>🎄 '+(lang==='sv'?'Juletikett':lang==='en'?'Christmas label':'Jouluetiketti')+'</span><span>'+jouluKpl+(lang==='sv'?' st':lang==='en'?'':' kpl')+'</span></li>');
+  $('#lines').innerHTML = lines.length ? lines.join('') : '<li class="empty">'+t.sumEmpty+'</li>';
+  var s = n*ASET.hintaKpl - sum;
+  $('#save').textContent = s>0 ? t.save.replace('{s}', s) : '';
+  $('#total').textContent = sum+' €';
+  $('#send').disabled = n===0;
+  $('#bar').classList.toggle('show', n>0 && !inView($('#summary')));
+  $('#barN').textContent = t.jars(n); $('#barT').textContent = sum+' €';
+  $$('.card').forEach(function(c){ var id=c.getAttribute('data-id'); c.classList.toggle('picked', qty[id]>0); $('output',c).textContent=qty[id]; });
+}
+function inView(el){ var r=el.getBoundingClientRect(); return r.top<innerHeight && r.bottom>0; }
+
+document.addEventListener('click', function(e){
+  var a = e.target.closest('a[href^="#"]');
+  if (a){ e.preventDefault(); var id=a.getAttribute('href').slice(1); var el=id==='top'?document.body:document.getElementById(id);
+    if (el) el.scrollIntoView({behavior:'smooth', block:'start'}); return; }
+  var b = e.target.closest('[data-q]');
+  if (b){ var id=b.closest('.card').getAttribute('data-id'); qty[id]=Math.max(0,Math.min(99,qty[id]+(+b.getAttribute('data-q')))); update(); return; }
+  var j = e.target.closest('[data-j]');
+  if (j){ jouluKpl=Math.max(1,Math.min(total(),jouluKpl+(+j.getAttribute('data-j')))); update(); return; }
+  var l = e.target.closest('[data-lang]');
+  if (l){ applyLang(l.getAttribute('data-lang')); return; }
+  var c = e.target.closest('[data-copy]');
+  if (c){ var txt=$('#'+c.getAttribute('data-copy')).textContent.replace(/\s/g, c.getAttribute('data-copy')==='mpNum'?'':' ');
+    copyText(txt); c.textContent=T[lang].copied; setTimeout(function(){c.textContent=T[lang].copy;},1600); }
+});
+function copyText(s){
+  try { navigator.clipboard.writeText(s); return; } catch(e){}
+  var ta=document.createElement('textarea'); ta.value=s; document.body.appendChild(ta); ta.select();
+  try{document.execCommand('copy');}catch(e){} ta.remove();
+}
+$('#jouluBox').addEventListener('change', function(){ joulu=this.checked; jouluKpl=0; update(); });
+
+$('#send').addEventListener('click', function(){
+  var t=T[lang], f=$('#form'), err=$('#err');
+  var d = { nimi:f.nimi.value.trim(), puhelin:f.puhelin.value.trim(), email:f.email.value.trim(), viesti:f.viesti.value.trim(),
+            hp:f.hp.value, kieli:lang, noutoPvm:f.noutoPvm.value, noutoAika:f.noutoAika.value, maarat:JSON.parse(JSON.stringify(qty)), joulu:joulu, jouluKpl:jouluKpl };
+  err.textContent='';
+  if (!d.nimi || !d.puhelin){ err.textContent=t.errName; f.scrollIntoView({behavior:'smooth',block:'center'}); (d.nimi?f.puhelin:f.nimi).focus(); return; }
+  if (!d.noutoPvm || !d.noutoAika || d.noutoPvm < f.noutoPvm.min){ err.textContent=t.errPick; (d.noutoPvm && d.noutoPvm>=f.noutoPvm.min?f.noutoAika:f.noutoPvm).focus(); return; }
+  if (d.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email)){ err.textContent=t.errEmail; f.email.focus(); return; }
+  var btn=this; btn.disabled=true; btn.textContent=t.sending;
+  function ok(r){ r.email=d.email; lastOrder=r; fillDone(r); $('#done').classList.add('show');
+      btn.textContent=T[lang].sumBtn;
+      for (var k in qty) qty[k]=0; joulu=false; $('#jouluBox').checked=false; f.reset(); update(); }
+  function fail(e){ btn.disabled=false; btn.textContent=T[lang].sumBtn;
+      err.textContent = (e && e.message && !/Exception|undefined|fetch|network/i.test(e.message)) ? e.message : T[lang].errNet; }
+  if (API) {
+    fetch(API, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(d) })
+      .then(function(r){ return r.json(); })
+      .then(function(r){ r && r.ok ? ok(r.data) : fail({message: r && r.error}); })
+      .catch(fail);
+  } else {
+    google.script.run.withSuccessHandler(ok).withFailureHandler(fail).tallennaTilaus(d);
+  }
+});
+function fillDone(r){
+  var t=T[lang];
+  $('#doneNr').textContent = t.doneNr.replace('{n}', r.nro);
+  $('#doneAmt').textContent = r.summa+' €';
+  $('#mpNum').textContent = ASET.mobilepay;
+  $('#mpMsg').textContent = t.msgWord+' '+r.nro;
+  $('#doneMail').textContent = r.email ? t.doneMail.replace('{e}', r.email) : '';
+  $('#donePick').textContent = r.nouto ? t.donePickTxt.replace('{t}', r.nouto) : t.donePickup;
+}
+$('#doneClose').addEventListener('click', function(){ $('#done').classList.remove('show'); lastOrder=null; window.scrollTo({top:0,behavior:'smooth'}); });
+
+// nav + reveal + bar
+function onScroll(){ $('#nav').classList.toggle('solid', scrollY>40); $('#bar').classList.toggle('show', total()>0 && !inView($('#summary'))); }
+addEventListener('scroll', onScroll, {passive:true});
+var io = 'IntersectionObserver' in window ? new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }); }, {threshold:.12}) : null;
+function observe(){ $$('.reveal:not(.in)').forEach(function(el){ io ? io.observe(el) : el.classList.add('in'); }); }
+
+function fillTimes(){
+  var sel=$('select[name=noutoAika]'), cur=sel.value, o='<option value="">'+T[lang].timePh+'</option>';
+  for (var h=9; h<=18; h++){ ['00','30'].forEach(function(m){ if (h===18 && m==='30') return; var v=(h<10?'0':'')+h+':'+m; o+='<option value="'+v+'">'+(lang==='sv'?'kl. ':lang==='en'?'':'klo ')+v+'</option>'; }); }
+  sel.innerHTML=o; sel.value=cur;
+}
+(function(){ var d=new Date(), p=function(n){return (n<10?'0':'')+n;}; $('input[name=noutoPvm]').min=d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()); })();
+$('#routeBtn').href = ASET.reitti;
+var start='fi'; try { start = localStorage.getItem('kurkku-lang') || 'fi'; } catch(e){}
+applyLang(start==='sv'||start==='en'?start:'fi'); onScroll();
+</script>
+</body>
+</html>
